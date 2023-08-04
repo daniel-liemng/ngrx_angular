@@ -7,6 +7,7 @@ import {
   reset,
 } from 'src/app/services/store/counter.action';
 import { CounterModel } from 'src/app/services/store/counter.model';
+import { AppStateModel } from 'src/app/services/store/global/appstate.model';
 
 @Component({
   selector: 'app-counterbutton',
@@ -14,7 +15,8 @@ import { CounterModel } from 'src/app/services/store/counter.model';
   styleUrls: ['./counterbutton.component.scss'],
 })
 export class CounterbuttonComponent {
-  constructor(private store: Store<{ counter: CounterModel }>) {}
+  // constructor(private store: Store<{ counter: CounterModel }>) {}
+  constructor(private store: Store<AppStateModel>) {}
 
   onDecrement() {
     this.store.dispatch(decrement());

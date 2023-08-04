@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { customIncrement } from 'src/app/services/store/counter.action';
 import { CounterModel } from 'src/app/services/store/counter.model';
 import { getChannelName } from 'src/app/services/store/counter.selector';
+import { AppStateModel } from 'src/app/services/store/global/appstate.model';
 
 @Component({
   selector: 'app-custom-counter',
@@ -17,7 +18,8 @@ export class CustomCounterComponent implements OnInit, OnDestroy {
   channelName!: string;
   counterSubscribe!: Subscription;
 
-  constructor(private store: Store<{ counter: CounterModel }>) {}
+  // constructor(private store: Store<{ counter: CounterModel }>) {}
+  constructor(private store: Store<AppStateModel>) {}
 
   ngOnInit(): void {
     this.counterSubscribe = this.store

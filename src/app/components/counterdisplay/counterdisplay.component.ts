@@ -3,6 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { CounterModel } from 'src/app/services/store/counter.model';
 import { getCounter } from 'src/app/services/store/counter.selector';
+import { AppStateModel } from 'src/app/services/store/global/appstate.model';
 
 @Component({
   selector: 'app-counterdisplay',
@@ -15,7 +16,8 @@ export class CounterdisplayComponent implements OnInit, OnDestroy {
   counterSubcribe!: Subscription;
   counter$!: Observable<CounterModel>;
 
-  constructor(private store: Store<{ counter: CounterModel }>) {}
+  // constructor(private store: Store<{ counter: CounterModel }>) {}
+  constructor(private store: Store<AppStateModel>) {}
 
   ngOnInit(): void {
     this.counterSubcribe = this.store.select(getCounter).subscribe((data) => {
