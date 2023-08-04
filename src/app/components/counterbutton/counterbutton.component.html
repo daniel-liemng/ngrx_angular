@@ -1,3 +1,12 @@
-<button (click)="onDecrement()">Decrement</button>
-<button (click)="onIncrement()">Increment</button>
-<button (click)="onReset()">Reset</button>
+<div class="btn-group">
+  <button mat-raised-button color="primary" (click)="onDecrement()">
+    Decrement
+  </button>
+  <button mat-raised-button color="accent" (click)="onIncrement()">
+    Increment
+  </button>
+  <button mat-raised-button color="warn" (click)="onReset()">Reset</button>
+  <button mat-raised-button color="warn" (click)="onRename()">
+    Rename Channel
+  </button>
+</div>
