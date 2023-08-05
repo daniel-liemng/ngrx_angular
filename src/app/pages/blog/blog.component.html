@@ -13,11 +13,20 @@
     <mat-card-header class="card-header">
       <h1>{{ blog.title }}</h1>
       <button
-        (click)="updateBlog(blog.id, blog.title, blog.description)"
+        type="button"
+        (click)="updateBlog(blog.id)"
         mat-raised-button
         color="primary"
       >
         Edit
+      </button>
+      <button
+        type="button"
+        (click)="deleteBlog(blog.id)"
+        mat-raised-button
+        color="warn"
+      >
+        Delete
       </button>
     </mat-card-header>
     <mat-card-content>

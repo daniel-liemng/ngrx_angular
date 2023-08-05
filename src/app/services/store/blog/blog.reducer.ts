@@ -1,6 +1,7 @@
 import { createReducer, on } from '@ngrx/store';
 import { initialBlogState } from './blog.state';
-import { addBlog, loadBlog, updateBlog } from './blog.action';
+import { addBlog, deleteBlog, loadBlog, updateBlog } from './blog.action';
+import { BlogModel } from './blog.model';
 
 const _blogReducer = createReducer(
   initialBlogState,
@@ -12,7 +13,7 @@ const _blogReducer = createReducer(
   }),
   on(addBlog, (state, action) => {
     const _blog = { ...action.blogInput };
-    _blog.id = state.blogList.length + 1;
+    _blog.id = Math.floor(Math.random() * Date.now());
     return {
       ...state,
       blogList: [...state.blogList, _blog],
@@ -20,12 +21,22 @@ const _blogReducer = createReducer(
   }),
   on(updateBlog, (state, action) => {
     const _blog = { ...action.blogInput };
-    const updatedBlogs = state.blogList.map((blog) => {
+    const updatedBlogs = state.blogList.map((blog: BlogModel) => {
       return _blog.id === blog.id ? _blog : blog;
+    });
+    console.log('7878', updatedBlogs);
+    return {
+      ...state,
+      blogList: updatedBlogs,
+    };
+  }),
+  on(deleteBlog, (state, action) => {
+    const updatedBlogs = state.blogList.filter((blog: BlogModel) => {
+      return blog.id !== action.id;
     });
     return {
       ...state,
-      blogList: [...updatedBlogs],
+      blogList: updatedBlogs,
     };
   })
 );

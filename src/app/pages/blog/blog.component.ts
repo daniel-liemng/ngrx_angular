@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { BlogFormDialogComponent } from 'src/app/components/blog-form-dialog/blog-form-dialog.component';
+import { deleteBlog } from 'src/app/services/store/blog/blog.action';
 import { BlogModel } from 'src/app/services/store/blog/blog.model';
 import { getBlog } from 'src/app/services/store/blog/blog.selector';
 import { AppStateModel } from 'src/app/services/store/global/appstate.model';
@@ -34,20 +35,15 @@ export class BlogComponent implements OnInit {
     });
   }
 
-  updateBlog(id: number, title: string, description: string) {
+  updateBlog(id: number) {
     this.dialog.open(BlogFormDialogComponent, {
-      data: { id, title, description, isEdit: true },
+      data: { id, isEdit: true },
     });
   }
 
-  // openDialog(): void {
-  //   const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
-  //     data: { name: '' },
-  //   });
-
-  //   dialogRef.afterClosed().subscribe((result) => {
-  //     console.log('The dialog was closed');
-  //     this.animal = result;
-  //   });
-  // }
+  deleteBlog(id: number) {
+    if (confirm('Are you sure you want to delete it?')) {
+      this.store.dispatch(deleteBlog({ id }));
+    }
+  }
 }

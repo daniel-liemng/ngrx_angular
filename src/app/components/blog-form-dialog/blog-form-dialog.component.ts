@@ -2,7 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import { addBlog, updateBlog } from 'src/app/services/store/blog/blog.action';
+import {
+  addBlog,
+  loadBlog,
+  updateBlog,
+} from 'src/app/services/store/blog/blog.action';
 import { BlogModel } from 'src/app/services/store/blog/blog.model';
 import { getBlogById } from 'src/app/services/store/blog/blog.selector';
 import { AppStateModel } from 'src/app/services/store/global/appstate.model';
