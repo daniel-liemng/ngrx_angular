@@ -6,3 +6,7 @@ export const addBlog = createAction(
   'addBlog',
   props<{ blogInput: BlogModel }>()
 );
+export const updateBlog = createAction(
+  'updateBlog',
+  props<{ blogInput: BlogModel }>()
+);

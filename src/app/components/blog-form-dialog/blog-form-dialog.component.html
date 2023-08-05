@@ -1,5 +1,6 @@
 <form [formGroup]="blogForm" (ngSubmit)="saveBlog()">
-  <h1 mat-dialog-title>Blog Form</h1>
+  <h1 *ngIf="editBlogId" mat-dialog-title>Update Blog</h1>
+  <h1 *ngIf="!editBlogId" mat-dialog-title>Create Blog</h1>
   <div mat-dialog-content>
     <mat-form-field>
       <mat-label>Title</mat-label>

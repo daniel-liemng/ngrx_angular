@@ -34,6 +34,12 @@ export class BlogComponent implements OnInit {
     });
   }
 
+  updateBlog(id: number, title: string, description: string) {
+    this.dialog.open(BlogFormDialogComponent, {
+      data: { id, title, description, isEdit: true },
+    });
+  }
+
   // openDialog(): void {
   //   const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
   //     data: { name: '' },
