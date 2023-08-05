@@ -1,5 +1,13 @@
 <h1>Blog</h1>
 
+<button
+  mat-raised-button
+  color="primary"
+  (click)="openDialog('300ms', '300ms')"
+>
+  Add Blog
+</button>
+
 <div class="blog-list">
   <mat-card *ngFor="let blog of blogList" class="blog-item">
     <mat-card-header>

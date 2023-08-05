@@ -26,7 +26,6 @@ export class CustomCounterComponent implements OnInit, OnDestroy {
       .select(getChannelName)
       .subscribe((data) => {
         this.channelName = data;
-        console.log('custome');
       });
 
     // this.counterSubscribe = this.store.select('counter').subscribe((data) => {

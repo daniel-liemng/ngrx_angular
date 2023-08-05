@@ -1,0 +1,23 @@
+<form [formGroup]="blogForm" (ngSubmit)="saveBlog()">
+  <h1 mat-dialog-title>Blog Form</h1>
+  <div mat-dialog-content>
+    <mat-form-field>
+      <mat-label>Title</mat-label>
+      <input formControlName="title" matInput type="text" placeholder="Title" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Description</mat-label>
+      <textarea
+        formControlName="description"
+        matInput
+        placeholder="Description"
+      ></textarea>
+    </mat-form-field>
+  </div>
+  <div mat-dialog-actions>
+    <button type="button" mat-button mat-dialog-close>Cancel</button>
+    <button type="submit" color="primary" mat-button cdkFocusInitial>
+      Save
+    </button>
+  </div>
+</form>

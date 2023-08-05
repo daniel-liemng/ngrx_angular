@@ -22,7 +22,6 @@ export class CounterdisplayComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.counterSubcribe = this.store.select(getCounter).subscribe((data) => {
       this.counterNum = data;
-      console.log('display');
     });
 
     // WAY 1
