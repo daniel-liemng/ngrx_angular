@@ -8,8 +8,12 @@
   Add Blog
 </button>
 
+<mat-card *ngIf="!blogInfo.blogList.length">
+  <h1>No Blog Found</h1>
+</mat-card>
+
 <div class="blog-list">
-  <mat-card *ngFor="let blog of blogList" class="blog-item">
+  <mat-card *ngFor="let blog of blogInfo.blogList" class="blog-item">
     <mat-card-header class="card-header">
       <h1>{{ blog.title }}</h1>
       <button
@@ -31,6 +35,17 @@
     </mat-card-header>
     <mat-card-content>
       <p>{{ blog.description }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+
+<div *ngIf="blogInfo.errorMessage">
+  <mat-card>
+    <mat-card-header>
+      <h1 style="color: red">Error Occured</h1>
+    </mat-card-header>
+    <mat-card-content>
+      <p style="color: red">{{ blogInfo.errorMessage }}</p>
     </mat-card-content>
   </mat-card>
 </div>

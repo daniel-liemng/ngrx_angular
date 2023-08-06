@@ -13,3 +13,7 @@ export const getBlogById = (blogId: number) =>
       (blog: BlogModel) => blog.id === blogId
     ) as BlogModel;
   });
+
+export const getBlogInfo = createSelector(getBlogState, (state) => {
+  return state;
+});
