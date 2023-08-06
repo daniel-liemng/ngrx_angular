@@ -6,8 +6,12 @@ import {
   LOAD_BLOG,
   addBlog,
   addBlogSuccess,
+  deleteBlog,
+  deleteBlogSuccess,
   loadBlogFail,
   loadBlogSuccess,
+  updateBlog,
+  updateBlogSuccess,
 } from './blog.action';
 import { map, exhaustMap, catchError, EMPTY, of } from 'rxjs';
 import { BlogModel } from './blog.model';
@@ -37,6 +41,34 @@ export class BlogEffects {
         return this.service.createBlog(action.blogInput).pipe(
           map((data) => {
             return addBlogSuccess({ blogInput: data as BlogModel });
+          }),
+          catchError((err) => of(loadBlogFail({ errorText: err })))
+        );
+      })
+    )
+  );
+
+  _updateBlog = createEffect(() =>
+    this.action$.pipe(
+      ofType(updateBlog),
+      exhaustMap((action) => {
+        return this.service.updateBlog(action.blogInput).pipe(
+          map(() => {
+            return updateBlogSuccess({ blogInput: action.blogInput });
+          }),
+          catchError((err) => of(loadBlogFail({ errorText: err })))
+        );
+      })
+    )
+  );
+
+  _deleteBlog = createEffect(() =>
+    this.action$.pipe(
+      ofType(deleteBlog),
+      exhaustMap((action) => {
+        return this.service.deleteBlog(action.id).pipe(
+          map(() => {
+            return deleteBlogSuccess({ id: action.id });
           }),
           catchError((err) => of(loadBlogFail({ errorText: err })))
         );

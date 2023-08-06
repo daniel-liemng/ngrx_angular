@@ -50,6 +50,8 @@ export class BlogComponent implements OnInit {
   }
 
   deleteBlog(id: number) {
+    console.log('4747', id);
+
     if (confirm('Are you sure you want to delete it?')) {
       this.store.dispatch(deleteBlog({ id }));
     }

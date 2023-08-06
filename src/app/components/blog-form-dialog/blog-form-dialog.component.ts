@@ -55,7 +55,7 @@ export class BlogFormDialogComponent implements OnInit {
         description: this.blogForm.value.description as string,
       };
 
-      if (this.editBlogId) {
+      if (this.data?.isEdit) {
         blogInput.id = this.blogForm.value.id as number;
         this.store.dispatch(updateBlog({ blogInput }));
       } else {

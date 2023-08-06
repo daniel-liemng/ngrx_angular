@@ -4,10 +4,12 @@ import {
   addBlog,
   addBlogSuccess,
   deleteBlog,
+  deleteBlogSuccess,
   loadBlog,
   loadBlogFail,
   loadBlogSuccess,
   updateBlog,
+  updateBlogSuccess,
 } from './blog.action';
 import { BlogModel } from './blog.model';
 
@@ -49,18 +51,28 @@ const _blogReducer = createReducer(
       blogList: [...state.blogList, _blog],
     };
   }),
-  on(updateBlog, (state, action) => {
+  on(updateBlogSuccess, (state, action) => {
     const _blog = { ...action.blogInput };
     const updatedBlogs = state.blogList.map((blog: BlogModel) => {
       return _blog.id === blog.id ? _blog : blog;
     });
-    console.log('7878', updatedBlogs);
     return {
       ...state,
       blogList: updatedBlogs,
     };
   }),
-  on(deleteBlog, (state, action) => {
+  // on(updateBlog, (state, action) => {
+  //   const _blog = { ...action.blogInput };
+  //   const updatedBlogs = state.blogList.map((blog: BlogModel) => {
+  //     return _blog.id === blog.id ? _blog : blog;
+  //   });
+  //   console.log('7878', updatedBlogs);
+  //   return {
+  //     ...state,
+  //     blogList: updatedBlogs,
+  //   };
+  // }),
+  on(deleteBlogSuccess, (state, action) => {
     const updatedBlogs = state.blogList.filter((blog: BlogModel) => {
       return blog.id !== action.id;
     });
@@ -69,6 +81,15 @@ const _blogReducer = createReducer(
       blogList: updatedBlogs,
     };
   })
+  // on(deleteBlog, (state, action) => {
+  //   const updatedBlogs = state.blogList.filter((blog: BlogModel) => {
+  //     return blog.id !== action.id;
+  //   });
+  //   return {
+  //     ...state,
+  //     blogList: updatedBlogs,
+  //   };
+  // })
 );
 
 export const blogReducer = (state: any, action: any) => {

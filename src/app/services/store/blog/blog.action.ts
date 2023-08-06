@@ -7,7 +7,12 @@ export const LOAD_BLOG_FAIL = '[Blog Page] Load Blog Fail';
 
 export const ADD_BLOG = '[Blog Page] Add Blog';
 export const ADD_BLOG_SUCCESS = '[Blog Page] Add Blog Success';
-export const ADD_BLOG_FAIL = '[Blog Page] Add Blog Fail';
+
+export const UPDATE_BLOG = '[Blog Page] Update Blog';
+export const UPDATE_BLOG_SUCCESS = '[Blog Page] Update Blog Success';
+
+export const DELETE_BLOG = '[Blog Page] Delete Blog';
+export const DELETE_BLOG_SUCCESS = '[Blog Page] Delete Blog Success';
 
 export const loadBlog = createAction(LOAD_BLOG);
 // export const loadBlog = createAction('loadBlog');
@@ -37,8 +42,21 @@ export const addBlogSuccess = createAction(
 );
 
 export const updateBlog = createAction(
-  'updateBlog',
+  UPDATE_BLOG,
   props<{ blogInput: BlogModel }>()
 );
+export const updateBlogSuccess = createAction(
+  UPDATE_BLOG_SUCCESS,
+  props<{ blogInput: BlogModel }>()
+);
+// export const updateBlog = createAction(
+//   'updateBlog',
+//   props<{ blogInput: BlogModel }>()
+// );
 
-export const deleteBlog = createAction('deleteBlog', props<{ id: number }>());
+export const deleteBlog = createAction(DELETE_BLOG, props<{ id: number }>());
+export const deleteBlogSuccess = createAction(
+  DELETE_BLOG_SUCCESS,
+  props<{ id: number }>()
+);
+// export const deleteBlog = createAction('deleteBlog', props<{ id: number }>());
