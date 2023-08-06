@@ -8,6 +8,7 @@ import {
   getBlog,
   getBlogInfo,
 } from 'src/app/services/store/blog/blog.selector';
+import { loadSpinner } from 'src/app/services/store/global/app.action';
 import { AppStateModel } from 'src/app/services/store/global/appstate.model';
 
 @Component({
@@ -23,10 +24,15 @@ export class BlogComponent implements OnInit {
   constructor(private store: Store<AppStateModel>, public dialog: MatDialog) {}
 
   ngOnInit(): void {
-    this.store.dispatch(loadBlog());
+    this.store.dispatch(loadSpinner({ isLoading: true }));
+    setTimeout(() => {
+      this.store.dispatch(loadBlog());
+      this.store.dispatch(loadSpinner({ isLoading: false }));
+    }, 2000);
     this.store.select(getBlogInfo).subscribe((data) => {
       this.blogInfo = data;
     });
+
     // this.store.select(getBlog).subscribe((data) => {
     //   this.blogList = data;
     // });
@@ -53,7 +59,10 @@ export class BlogComponent implements OnInit {
     console.log('4747', id);
 
     if (confirm('Are you sure you want to delete it?')) {
-      this.store.dispatch(deleteBlog({ id }));
+      this.store.dispatch(loadSpinner({ isLoading: true }));
+      setTimeout(() => {
+        this.store.dispatch(deleteBlog({ id }));
+      }, 2000);
     }
   }
 }

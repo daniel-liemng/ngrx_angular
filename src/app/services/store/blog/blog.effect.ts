@@ -16,7 +16,7 @@ import {
 import { map, exhaustMap, catchError, EMPTY, of, switchMap } from 'rxjs';
 import { BlogModel } from './blog.model';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { EmptyAction, ShowAlert } from '../global/app.action';
+import { EmptyAction, ShowAlert, loadSpinner } from '../global/app.action';
 
 @Injectable()
 export class BlogEffects {
@@ -34,7 +34,12 @@ export class BlogEffects {
           map((data) => {
             return loadBlogSuccess({ blogList: data });
           }),
-          catchError((err) => of(loadBlogFail({ errorText: err })))
+          catchError((err) =>
+            of(
+              loadBlogFail({ errorText: err }),
+              loadSpinner({ isLoading: false })
+            )
+          )
         );
       })
     )
@@ -49,6 +54,7 @@ export class BlogEffects {
           switchMap((data) =>
             of(
               addBlogSuccess({ blogInput: data as BlogModel }),
+              loadSpinner({ isLoading: false }),
               ShowAlert({ message: 'Blog Created', actionResult: 'pass' })
             )
           ),
@@ -57,7 +63,8 @@ export class BlogEffects {
               ShowAlert({
                 message: `Blog Create Failed - Due to ${err.message}`,
                 actionResult: 'fail',
-              })
+              }),
+              loadSpinner({ isLoading: false })
             )
           )
           // catchError((err) => of(loadBlogFail({ errorText: err })))
@@ -89,6 +96,7 @@ export class BlogEffects {
           switchMap((res) =>
             of(
               updateBlogSuccess({ blogInput: action.blogInput }),
+              loadSpinner({ isLoading: false }),
               ShowAlert({ message: 'Blog Updated', actionResult: 'pass' })
             )
           ),
@@ -97,7 +105,8 @@ export class BlogEffects {
               ShowAlert({
                 message: `Blog Update Fail - Due to ${err.message}`,
                 actionResult: 'fail',
-              })
+              }),
+              loadSpinner({ isLoading: false })
             )
           )
           // catchError((err) => of(loadBlogFail({ errorText: err })))
@@ -114,6 +123,7 @@ export class BlogEffects {
           switchMap(() =>
             of(
               deleteBlogSuccess({ id: action.id }),
+              loadSpinner({ isLoading: false }),
               ShowAlert({ message: 'Blog Deleted', actionResult: 'pass' })
             )
           ),
@@ -122,7 +132,8 @@ export class BlogEffects {
               ShowAlert({
                 message: `Blog Delete Fail - Due to ${err.message}`,
                 actionResult: 'fail',
-              })
+              }),
+              loadSpinner({ isLoading: false })
             )
           )
         );

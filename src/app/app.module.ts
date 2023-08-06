@@ -22,6 +22,7 @@ import { BlogFormDialogComponent } from './components/blog-form-dialog/blog-form
 import { EffectsModule } from '@ngrx/effects';
 import { BlogEffects } from './services/store/blog/blog.effect';
 import { AppEffects } from './services/store/global/app.effect';
+import { LoadingSpinnerComponent } from './components/loading-spinner/loading-spinner.component';
 
 @NgModule({
   declarations: [
@@ -34,6 +35,7 @@ import { AppEffects } from './services/store/global/app.effect';
     BlogComponent,
     NavbarComponent,
     BlogFormDialogComponent,
+    LoadingSpinnerComponent,
   ],
   imports: [
     BrowserModule,

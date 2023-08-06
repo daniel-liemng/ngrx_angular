@@ -2,13 +2,10 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
-import {
-  addBlog,
-  loadBlog,
-  updateBlog,
-} from 'src/app/services/store/blog/blog.action';
+import { addBlog, updateBlog } from 'src/app/services/store/blog/blog.action';
 import { BlogModel } from 'src/app/services/store/blog/blog.model';
 import { getBlogById } from 'src/app/services/store/blog/blog.selector';
+import { loadSpinner } from 'src/app/services/store/global/app.action';
 import { AppStateModel } from 'src/app/services/store/global/appstate.model';
 
 @Component({
@@ -57,9 +54,15 @@ export class BlogFormDialogComponent implements OnInit {
 
       if (this.data?.isEdit) {
         blogInput.id = this.blogForm.value.id as number;
-        this.store.dispatch(updateBlog({ blogInput }));
+        this.store.dispatch(loadSpinner({ isLoading: true }));
+        setTimeout(() => {
+          this.store.dispatch(updateBlog({ blogInput }));
+        }, 2000);
       } else {
-        this.store.dispatch(addBlog({ blogInput }));
+        this.store.dispatch(loadSpinner({ isLoading: true }));
+        setTimeout(() => {
+          this.store.dispatch(addBlog({ blogInput }));
+        }, 2000);
       }
       this.dialogRef.close();
     }
