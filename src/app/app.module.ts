@@ -21,6 +21,7 @@ import { appState } from './services/store/global/app.state';
 import { BlogFormDialogComponent } from './components/blog-form-dialog/blog-form-dialog.component';
 import { EffectsModule } from '@ngrx/effects';
 import { BlogEffects } from './services/store/blog/blog.effect';
+import { AppEffects } from './services/store/global/app.effect';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,7 @@ import { BlogEffects } from './services/store/blog/blog.effect';
     StoreModule.forRoot(appState),
     BrowserAnimationsModule,
     StoreDevtoolsModule.instrument({ maxAge: false, logOnly: !isDevMode() }),
-    EffectsModule.forRoot([BlogEffects]),
+    EffectsModule.forRoot([BlogEffects, AppEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

@@ -13,12 +13,18 @@ import {
   updateBlog,
   updateBlogSuccess,
 } from './blog.action';
-import { map, exhaustMap, catchError, EMPTY, of } from 'rxjs';
+import { map, exhaustMap, catchError, EMPTY, of, switchMap } from 'rxjs';
 import { BlogModel } from './blog.model';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { EmptyAction, ShowAlert } from '../global/app.action';
 
 @Injectable()
 export class BlogEffects {
-  constructor(private action$: Actions, private service: MasterService) {}
+  constructor(
+    private action$: Actions,
+    private service: MasterService,
+    private _snackBar: MatSnackBar
+  ) {}
 
   _loadBlog = createEffect(() =>
     this.action$.pipe(
@@ -34,43 +40,91 @@ export class BlogEffects {
     )
   );
 
+  // With MUI Alert
   _addBlog = createEffect(() =>
     this.action$.pipe(
       ofType(addBlog),
-      exhaustMap((action) => {
-        return this.service.createBlog(action.blogInput).pipe(
-          map((data) => {
-            return addBlogSuccess({ blogInput: data as BlogModel });
-          }),
-          catchError((err) => of(loadBlogFail({ errorText: err })))
-        );
-      })
+      switchMap((action) =>
+        this.service.createBlog(action.blogInput).pipe(
+          switchMap((data) =>
+            of(
+              addBlogSuccess({ blogInput: data as BlogModel }),
+              ShowAlert({ message: 'Blog Created', actionResult: 'pass' })
+            )
+          ),
+          catchError((err) =>
+            of(
+              ShowAlert({
+                message: `Blog Create Failed - Due to ${err.message}`,
+                actionResult: 'fail',
+              })
+            )
+          )
+          // catchError((err) => of(loadBlogFail({ errorText: err })))
+        )
+      )
     )
   );
+
+  // NORMAL
+  // _addBlog = createEffect(() =>
+  //   this.action$.pipe(
+  //     ofType(addBlog),
+  //     exhaustMap((action) => {
+  //       return this.service.createBlog(action.blogInput).pipe(
+  //         map((data) => {
+  //           return addBlogSuccess({ blogInput: data as BlogModel });
+  //         }),
+  //         catchError((err) => of(loadBlogFail({ errorText: err })))
+  //       );
+  //     })
+  //   )
+  // );
 
   _updateBlog = createEffect(() =>
     this.action$.pipe(
       ofType(updateBlog),
-      exhaustMap((action) => {
-        return this.service.updateBlog(action.blogInput).pipe(
-          map(() => {
-            return updateBlogSuccess({ blogInput: action.blogInput });
-          }),
-          catchError((err) => of(loadBlogFail({ errorText: err })))
-        );
-      })
+      switchMap((action) =>
+        this.service.updateBlog(action.blogInput).pipe(
+          switchMap((res) =>
+            of(
+              updateBlogSuccess({ blogInput: action.blogInput }),
+              ShowAlert({ message: 'Blog Updated', actionResult: 'pass' })
+            )
+          ),
+          catchError((err) =>
+            of(
+              ShowAlert({
+                message: `Blog Update Fail - Due to ${err.message}`,
+                actionResult: 'fail',
+              })
+            )
+          )
+          // catchError((err) => of(loadBlogFail({ errorText: err })))
+        )
+      )
     )
   );
 
   _deleteBlog = createEffect(() =>
     this.action$.pipe(
       ofType(deleteBlog),
-      exhaustMap((action) => {
+      switchMap((action) => {
         return this.service.deleteBlog(action.id).pipe(
-          map(() => {
-            return deleteBlogSuccess({ id: action.id });
-          }),
-          catchError((err) => of(loadBlogFail({ errorText: err })))
+          switchMap(() =>
+            of(
+              deleteBlogSuccess({ id: action.id }),
+              ShowAlert({ message: 'Blog Deleted', actionResult: 'pass' })
+            )
+          ),
+          catchError((err) =>
+            of(
+              ShowAlert({
+                message: `Blog Delete Fail - Due to ${err.message}`,
+                actionResult: 'fail',
+              })
+            )
+          )
         );
       })
     )
