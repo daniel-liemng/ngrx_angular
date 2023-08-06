@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BlogModel } from './store/blog/blog.model';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -15,5 +15,15 @@ export class MasterService {
 
   getAllBlogs(): Observable<BlogModel[]> {
     return this.http.get<BlogModel[]>('http://localhost:3000/blogs');
+  }
+
+  createBlog(blogInput: BlogModel) {
+    return this.http.post('http://localhost:3000/blogs', blogInput).pipe(
+      tap(() => {
+        this.http.get<BlogModel>(
+          'http://localhost:3000/blogs?_limit=1&_sort=id&_order=desc'
+        );
+      })
+    );
   }
 }
