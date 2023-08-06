@@ -1,12 +1,12 @@
 import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { StoreModule } from '@ngrx/store';
 import { CounterbuttonComponent } from './components/counterbutton/counterbutton.component';
 import { CounterdisplayComponent } from './components/counterdisplay/counterdisplay.component';
-import { counterReducer } from './services/store/counter.reducer';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { CustomCounterComponent } from './components/custom-counter/custom-counter.component';
@@ -19,6 +19,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 
 import { appState } from './services/store/global/app.state';
 import { BlogFormDialogComponent } from './components/blog-form-dialog/blog-form-dialog.component';
+import { EffectsModule } from '@ngrx/effects';
+import { BlogEffects } from './services/store/blog/blog.effect';
 
 @NgModule({
   declarations: [
@@ -37,10 +39,12 @@ import { BlogFormDialogComponent } from './components/blog-form-dialog/blog-form
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule,
+    HttpClientModule,
     MaterialModule,
     StoreModule.forRoot(appState),
     BrowserAnimationsModule,
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
+    StoreDevtoolsModule.instrument({ maxAge: false, logOnly: !isDevMode() }),
+    EffectsModule.forRoot([BlogEffects]),
   ],
   providers: [],
   bootstrap: [AppComponent],

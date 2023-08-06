@@ -7,15 +7,15 @@ export const initialBlogState: Blogs = {
       title: 'Angular',
       description: 'Anglar is UI - frontend framework',
     },
-    {
-      id: 2,
-      title: 'React',
-      description: 'React is UI - frontend framework',
-    },
-    {
-      id: 3,
-      title: '.NET',
-      description: '.NET is UI - backend framework',
-    },
+    // {
+    //   id: 2,
+    //   title: 'React',
+    //   description: 'React is UI - frontend framework',
+    // },
+    // {
+    //   id: 3,
+    //   title: '.NET',
+    //   description: '.NET is UI - backend framework',
+    // },
   ],
 };

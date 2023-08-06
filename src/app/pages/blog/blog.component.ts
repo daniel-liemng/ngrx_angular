@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Store } from '@ngrx/store';
 import { BlogFormDialogComponent } from 'src/app/components/blog-form-dialog/blog-form-dialog.component';
-import { deleteBlog } from 'src/app/services/store/blog/blog.action';
+import { deleteBlog, loadBlog } from 'src/app/services/store/blog/blog.action';
 import { BlogModel } from 'src/app/services/store/blog/blog.model';
 import { getBlog } from 'src/app/services/store/blog/blog.selector';
 import { AppStateModel } from 'src/app/services/store/global/appstate.model';
@@ -19,6 +19,7 @@ export class BlogComponent implements OnInit {
   constructor(private store: Store<AppStateModel>, public dialog: MatDialog) {}
 
   ngOnInit(): void {
+    this.store.dispatch(loadBlog());
     this.store.select(getBlog).subscribe((data) => {
       this.blogList = data;
     });
